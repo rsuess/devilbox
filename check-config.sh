@@ -407,21 +407,21 @@ else
 	log_debug "Variable 'NEW_GID' has correct value: '${NEW_GID}'"
 fi
 
-TLD_SUFFIX="$( get_env_value "TLD_SUFFIX" )"
-TLD_SUFFIX_BLACKLIST="dev|com|org|net|int|edu|de"
-if echo "${TLD_SUFFIX}" | grep -E "^(${TLD_SUFFIX_BLACKLIST})\$" >/dev/null; then
-	log_err "Variable 'TLD_SUFFX' should not be set to '${TLD_SUFFIX}'. It is a real tld domain."
+TLD_PREFIX="$( get_env_value "TLD_PREFIX" )"
+TLD_PREFIX_BLACKLIST="dev|com|org|net|int|edu|de"
+if echo "${TLD_PREFIX}" | grep -E "^(${TLD_PREFIX_BLACKLIST})\$" >/dev/null; then
+	log_err "Variable 'TLD_SUFFX' should not be set to '${TLD_PREFIX}'. It is a real tld domain."
 	log_err "All DNS requests will be intercepted to this tld domain and re-routed to the HTTP container."
-	log_info "Consider using a subdomain value of e.g.: 'mydev.${TLD_SUFFIX}' instead."
+	log_info "Consider using a subdomain value of e.g.: 'mydev.${TLD_PREFIX}' instead."
 	RET_CODE=$(( RET_CODE + 1))
 	WRONG_ENV_FILES_VALUES=1
-elif [ "${TLD_SUFFIX}" = "localhost" ]; then
-	log_err "Variable 'TLD_SUFFX' should not be set to '${TLD_SUFFIX}'. It is a loopback address."
+elif [ "${TLD_PREFIX}" = "localhost" ]; then
+	log_err "Variable 'TLD_SUFFX' should not be set to '${TLD_PREFIX}'. It is a loopback address."
 	log_info "See: https://tools.ietf.org/html/draft-west-let-localhost-be-localhost-06"
 	RET_CODE=$(( RET_CODE + 1))
 	WRONG_ENV_FILES_VALUES=1
 else
-	log_debug "Variable 'TLD_SUFFIX' has correct value: '${TLD_SUFFIX}'"
+	log_debug "Variable 'TLD_PREFIX' has correct value: '${TLD_PREFIX}'"
 fi
 
 if [ "${WRONG_ENV_FILES_VALUES}" = "0" ]; then
@@ -731,10 +731,10 @@ print_head_1 "Checking projects settings"
 
 HOST_PATH_HTTPD_DATADIR="$( get_path "$( get_env_value "HOST_PATH_HTTPD_DATADIR" )" )"
 
-TLD_SUFFIX="$( get_env_value "TLD_SUFFIX" )"
+TLD_PREFIX="$( get_env_value "TLD_PREFIX" )"
 DNS_RECORD_WRONG=0
 while read -r project; do
-	VHOST="$( basename "${project}" ).${TLD_SUFFIX}"
+	VHOST="${TLD_PREFIX}.$( basename "${project}" )"
 	if ! validate_dns "${VHOST}"; then
 		log_err "Project '${VHOST}' has no valid DNS record"
 		RET_CODE=$(( RET_CODE + 1))

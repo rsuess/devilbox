@@ -41,7 +41,7 @@ services:
       - BACKEND_ADDR=varnish
       - BACKEND_PORT=6081
       - DEVILBOX_UI_SSL_CN
-      - TLD_SUFFIX
+      - TLD_PREFIX
     volumes:
       # Certificate Authority public key
       - ${DEVILBOX_PATH}/ca:/ca:rw${MOUNT_OPTIONS}

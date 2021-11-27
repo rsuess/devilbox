@@ -51,7 +51,7 @@ services:
       ##
       ## Bind wildcard/host settings
       ##
-      - WILDCARD_DNS=${TLD_SUFFIX:-loc}=127.0.0.1
+      - WILDCARD_DNS=${TLD_PREFIX:-loc}=127.0.0.1
       - EXTRA_HOSTS=${EXTRA_HOSTS}
 
       ##
@@ -264,7 +264,7 @@ services:
       ## Enable Mass Vhosts
       ##
       - MASS_VHOST_ENABLE=1
-      - MASS_VHOST_TLD=.${TLD_SUFFIX}
+      - MASS_VHOST_TLD=${TLD_PREFIX}.
       - MASS_VHOST_DOCROOT=${HTTPD_DOCROOT_DIR}
       - MASS_VHOST_TPL=${HTTPD_TEMPLATE_DIR}
       - MASS_VHOST_SSL_TYPE=${HTTPD_VHOST_SSL_TYPE:-both}

@@ -45,7 +45,7 @@ $connection['Httpd'][$host] = array(
 	'host' => $host,
 	'succ' => $succ
 );
-$host	= 'random.'.loadClass('Httpd')->getTldSuffix();
+$host	= loadClass('Httpd')->getTldPrefix() . '.random';
 $succ	= loadClass('Httpd')->canConnect($error, $host);
 $connection['Httpd'][$host] = array(
 	'error' => $error,
@@ -362,7 +362,7 @@ $HEALTH_PERCENT = 100 - ceil(100 * $HEALTH_FAILS / $HEALTH_TOTAL);
 									</tr>
 									<tr>
 										<th>vHost TLD</th>
-										<td>*.<?php echo loadClass('Httpd')->getTldSuffix(); ?></td>
+										<td><?php echo loadClass('Httpd')->getTldPrefix(); ?>.*</td>
 									</tr>
 									<tr>
 										<th>DNS</th>

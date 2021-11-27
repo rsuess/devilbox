@@ -58,7 +58,7 @@
 						<h4>No projects here.</h4>
 						<p>Simply create a directory in <strong><?php echo loadClass('Helper')->getEnv('HOST_PATH_HTTPD_DATADIR');?></strong> on your host computer (or in <strong>/shared/httpd</strong> inside the php container).</p>
 						<p><strong>Example:</strong><br/><?php echo loadClass('Helper')->getEnv('HOST_PATH_HTTPD_DATADIR');?>/my_project</p>
-						<p>It will then be available via <strong>http://my_project.<?php echo loadClass('Httpd')->getTldSuffix();?></strong></p>
+						<p>It will then be available via <strong>http://<?php echo loadClass('Httpd')->getTldPrefix();?>.my_project</strong></p>
 					<?php endif;?>
 				</div>
 			</div>
@@ -106,13 +106,13 @@
 
 			/**
 			 * Check if DNS record is set in /etc/hosts (or via attached DNS server)
-			 * for TLD_SUFFIX
+			 * for TLD_PREFIX
 			 */
 			function checkDns(vhost) {
 				var xhttp = new XMLHttpRequest();
 				var proto;
 				var port;
-				var name = vhost + '.<?php echo loadClass('Httpd')->getTldSuffix();?>'
+				var name = '<?php echo loadClass('Httpd')->getTldPrefix();?>.' + vhost; 
 
 				var url = window.location.href.split("/");
 				var tmp = url[2].split(":");
@@ -150,7 +150,7 @@
 
 					el_valid.className += ' bg-danger';
 					el_valid.innerHTML = 'ERR';
-					el_href.innerHTML = 'No Host DNS record found. Add the following to <code>/etc/hosts</code>:<br/><code>127.0.0.1 '+vhost+'.<?php echo loadClass('Httpd')->getTldSuffix();?></code>';
+					el_href.innerHTML = 'No Host DNS record found. Add the following to <code>/etc/hosts</code>:<br/><code>127.0.0.1 <?php echo loadClass('Httpd')->getTldPrefix();?>.'+vhost+'</code>';
 				}
 
 			}

@@ -25,7 +25,7 @@ class Httpd extends BaseClass implements BaseInterface
 	{
 		$htdocs		= loadClass('Helper')->getEnv('HTTPD_DOCROOT_DIR');
 		$docroot	= $this->_docRoot . DIRECTORY_SEPARATOR . $vhost . DIRECTORY_SEPARATOR . $htdocs;
-		$domain		= $vhost . '.' . $this->getTldSuffix();
+		$domain		=  $this->getTldPrefix().".".$vhost ;
 		$url		= 'http://'.$domain;
 		$error		= array();
 
@@ -67,8 +67,8 @@ class Httpd extends BaseClass implements BaseInterface
 
 					$vhosts[$directory] = array(
 						'name'		=> $directory,
-						'domain'	=> $directory .'.' . $this->getTldSuffix(),
-						'href'		=> 'http://' . $directory . '.' . $this->getTldSuffix()
+						'domain'	=>  $this->getTldPrefix().'.'.$directory,
+						'href'		=> 'http://'.$this->getTldPrefix().'.'.$directory
 					);
 				}
 			}
@@ -80,9 +80,9 @@ class Httpd extends BaseClass implements BaseInterface
 	}
 
 
-	public function getTldSuffix()
+	public function getTldPrefix()
 	{
-		return loadClass('Helper')->getEnv('TLD_SUFFIX');
+		return loadClass('Helper')->getEnv('TLD_PREFIX');
 	}
 
 	/**
