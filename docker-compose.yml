@@ -221,7 +221,7 @@ services:
   # Web Server
   # ------------------------------------------------------------
   httpd:
-    image: devilbox/${HTTPD_SERVER}:0.36
+    image: rsuess/docker-${HTTPD_SERVER}:latest
     hostname: httpd
 
     environment:
