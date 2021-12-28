@@ -158,8 +158,8 @@ services:
       - 172.16.238.100
 
     # MacOS and Windows have this by default, this hack also allows it for Linux
-    extra_hosts:
-      docker.for.wsl2.host.internal: ${IP}
+    #extra_hosts:
+      #docker.for.wsl2.host.internal: ${IP}
     networks:
       app_net:
         ipv4_address: 172.16.238.10
