@@ -354,36 +354,36 @@ services:
   # ------------------------------------------------------------
   # PostgreSQL
   # ------------------------------------------------------------
-  pgsql:
-    image: postgres:${PGSQL_SERVER}
-    hostname: pgsql
+  # pgsql:
+  #   image: postgres:${PGSQL_SERVER}
+  #   hostname: pgsql
 
-    environment:
+  #   environment:
 
-      - POSTGRES_USER=${PGSQL_ROOT_USER}
-      - POSTGRES_PASSWORD=${PGSQL_ROOT_PASSWORD}
-      - POSTGRES_HOST_AUTH_METHOD=${PGSQL_HOST_AUTH_METHOD:-trust}
-      - PGDATA=/var/lib/postgresql/data/pgdata
+  #     - POSTGRES_USER=${PGSQL_ROOT_USER}
+  #     - POSTGRES_PASSWORD=${PGSQL_ROOT_PASSWORD}
+  #     - POSTGRES_HOST_AUTH_METHOD=${PGSQL_HOST_AUTH_METHOD:-trust}
+  #     - PGDATA=/var/lib/postgresql/data/pgdata
 
-    ports:
-      # [local-machine:]local-port:docker-port
-      - "${LOCAL_LISTEN_ADDR}${HOST_PORT_PGSQL}:5432"
+  #   ports:
+  #     # [local-machine:]local-port:docker-port
+  #     - "${LOCAL_LISTEN_ADDR}${HOST_PORT_PGSQL}:5432"
 
-    networks:
-      app_net:
-        ipv4_address: 172.16.238.13
+  #   networks:
+  #     app_net:
+  #       ipv4_address: 172.16.238.13
 
-    volumes:
-      # ---- Format: ----
-      # HOST-DIRECTORY : DOCKER-DIRECTORY
+  #   volumes:
+  #     # ---- Format: ----
+  #     # HOST-DIRECTORY : DOCKER-DIRECTORY
 
-      # Mount PostgreSQL Data directory
-      - devilbox-pgsql-${PGSQL_SERVER}:/var/lib/postgresql/data/pgdata:rw${MOUNT_OPTIONS}
+  #     # Mount PostgreSQL Data directory
+  #     - devilbox-pgsql-${PGSQL_SERVER}:/var/lib/postgresql/data/pgdata:rw${MOUNT_OPTIONS}
 
-    depends_on:
-      - bind
-      - php
-      - httpd
+  #   depends_on:
+  #     - bind
+  #     - php
+  #     - httpd
 
 
   # ------------------------------------------------------------
@@ -436,29 +436,29 @@ services:
   # ------------------------------------------------------------
   # MongoDB
   # ------------------------------------------------------------
-  mongo:
-    image: mongo:${MONGO_SERVER}
-    hostname: mongo
+  # mongo:
+  #   image: mongo:${MONGO_SERVER}
+  #   hostname: mongo
 
-    ports:
-      # [local-machine:]local-port:docker-port
-      - "${LOCAL_LISTEN_ADDR}${HOST_PORT_MONGO}:27017"
+  #   ports:
+  #     # [local-machine:]local-port:docker-port
+  #     - "${LOCAL_LISTEN_ADDR}${HOST_PORT_MONGO}:27017"
 
-    networks:
-      app_net:
-        ipv4_address: 172.16.238.16
+  #   networks:
+  #     app_net:
+  #       ipv4_address: 172.16.238.16
 
-    volumes:
-      # ---- Format: ----
-      # HOST-DIRECTORY : DOCKER-DIRECTORY
+  #   volumes:
+  #     # ---- Format: ----
+  #     # HOST-DIRECTORY : DOCKER-DIRECTORY
 
-      # Mount MongoDB Data directory
-      - devilbox-mongo-${MONGO_SERVER}:/data/db:rw${MOUNT_OPTIONS}
+  #     # Mount MongoDB Data directory
+  #     - devilbox-mongo-${MONGO_SERVER}:/data/db:rw${MOUNT_OPTIONS}
 
-    depends_on:
-      - bind
-      - php
-      - httpd
+  #   depends_on:
+  #     - bind
+  #     - php
+  #     - httpd
 
 
 ################################################################################

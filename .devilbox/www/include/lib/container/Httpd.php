@@ -84,6 +84,10 @@ class Httpd extends BaseClass implements BaseInterface
 	{
 		return loadClass('Helper')->getEnv('TLD_PREFIX');
 	}
+	public function getTldSuffix()
+	{
+		return loadClass('Helper')->getEnv('TLD_SUFFIX');
+	}
 
 	/**
 	 * Get HTTP port.
