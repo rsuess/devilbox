@@ -145,7 +145,7 @@ services:
       ##
       ## Enable 127.0.0.1 Port-forwarding
       ##
-      - FORWARD_PORTS_TO_LOCALHOST=80:httpd:80,443:httpd:443,3306:mysql:3306,33306:mysql2:33306,5432:pgsql:5432,6379:redis:6379,11211:memcd:11211,27017:mongo:27017,9003:httpd:9003
+      - FORWARD_PORTS_TO_LOCALHOST=80:httpd:80,443:httpd:443,3306:mysql:3306,5432:pgsql:5432,6379:redis:6379,11211:memcd:11211,27017:mongo:27017
 
       ##
       ## MySQL Backups
@@ -158,8 +158,8 @@ services:
       - 172.16.238.100
 
     # MacOS and Windows have this by default, this hack also allows it for Linux
-    extra_hosts:
-      docker.for.wsl2.host.internal: ${IP}
+    #extra_hosts:
+      #docker.for.wsl2.host.internal: ${IP}
     networks:
       app_net:
         ipv4_address: 172.16.238.10
@@ -349,43 +349,6 @@ services:
       - bind
       - php
       - httpd
- # ------------------------------------------------------------
-  # MySQL Database
-  # ------------------------------------------------------------
-  mysql2:
-    image: devilbox/mysql:${MYSQL2_SERVER}-0.7
-    hostname: mysql2
-
-    environment:
-      - MYSQL_ROOT_PASSWORD
-      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
-
-    ports:
-      # [local-machine:]local-port:docker-port
-      - "${LOCAL_LISTEN_ADDR}${HOST_PORT_MYSQL2}:33306"
-
-    networks:
-      app_net:
-        ipv4_address: 172.16.238.17
-
-    volumes:
-      # ---- Format: ----
-      # HOST-DIRECTORY : DOCKER-DIRECTORY
-
-      # Mount devilbox user-defined cnf files in order
-      # to overwrite the MySQL server configuration
-      - ${DEVILBOX_PATH}/.devilbox/cfg/mysql2.cnf:/etc/mysql/conf.d/devilbox.cnf:ro${MOUNT_OPTIONS}
-      - ${DEVILBOX_PATH}/cfg/${MYSQL2_SERVER}:/etc/mysql/docker-default.d:ro${MOUNT_OPTIONS}
-
-      # Mount MySQL Data directory
-      - devilbox-${MYSQL2_SERVER}:/var/lib/mysql:rw${MOUNT_OPTIONS}
-
-    depends_on:
-      - bind
-      - php
-      - httpd
-
-
 
 
   # ------------------------------------------------------------
